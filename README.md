@@ -1,4 +1,4 @@
-# ItemFilter.sk
+# ItemFilter-Skript
 
 Intended to be used on Bukkit/Spigot Minecraft server running skript
 
