@@ -1,5 +1,10 @@
 # ItemFilter-Skript
 
+
+Make sure you're using the latest version of SkQuery and Skript
+
+
+
 Intended to be used on Bukkit/Spigot Minecraft server running skript
 
 Allows players to filter dropped items like in PotatoMC
