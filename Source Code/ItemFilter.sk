@@ -1,0 +1,102 @@
+options:
+# =======================
+#! Display Settings
+# -----------------------
+# The prefix for this resource
+# which will appear in all
+# messages
+  Prefix: &6&lItemFilter
+# -----------------------
+# The name of the menu that
+# will appear when using the
+# item filter command
+# (Try not to make this too long)
+  GUIName: &aItem Filter
+# -----------------------
+
+
+# =======================
+#! Version
+# -----------------------
+# Do not alter this!
+  Version: 1.0
+# -----------------------
+
+
+# =======================
+#! Code
+# -----------------------
+# Do not alter this unless
+# you know what you're doing
+
+on load:
+  set {PIFL::*} to coalitem, iron ingot, gold ingot, redstone, diamond, emerald, coal ore, iron ore and gold ore
+
+command /itemfilter [<text>]:
+  trigger:
+    if player has permission "itemfilter.use":
+      open chest with 3 rows named "&1&a{@GUIName}" to player
+      set {_count} to 0
+      loop 27 times:
+        set slot {_count} of player's current inventory to stained glass pane:15 named "&8"
+        add 1 to {_count}
+      set {_count} to 9
+      if {PIF::%uuid of player%::*} is not set:
+        set slot 22 of player's current inventory to bucket named "&eNo Filter"
+      else:
+        set slot 22 of player's current inventory to lava bucket named "&cClear Filter"
+      loop {PIFL::*}:
+        set {_name} to "%loop-value%"
+        replace all "coalitem" with "coal" in {_name}
+        replace all "_" with " " in {_name}
+        set slot {_count} of player's current inventory to loop-value named "&c%{_name}%"
+        loop {PIF::%uuid of player%::*}:
+          if "%loop-value-1%" is "%loop-value-2%":
+            set slot {_count} of player's current inventory to loop-value-1 named "&a%{_name}%"
+            stop loop
+        add 1 to {_count}
+
+on pickup:
+  if {PIF::%uuid of player%::*} is set:
+    loop {PIF::%uuid of player%::*}:
+      if "%event-item%" contains "%loop-value%":
+        stop
+    cancel event
+
+on quit:
+  delete {PIF::%uuid of player%::*}
+
+on inventory click:
+  if inventory name of player's current inventory is "&1&a{@GUIName}":
+    cancel event
+    if clicked slot is 22:
+      if {PIF::%uuid of player%::*} is set:
+        delete {PIF::%uuid of player%::*}
+        set slot 22 of player's current inventory to bucket named "&eNo Filter"
+        close player's inventory
+        send "{@Prefix}&7 You can now pickup items."
+    else:
+      set {_item} to "%uncoloured clicked item name%"
+      set {_itemn} to "%uncoloured clicked item name%"
+      if {_item} is not "":
+        set {_click} to clicked slot
+        if "%{_item}%" is "coal":
+          replace all "coal" with "coalitem" in {_item}
+        replace all " " with "_" in {_item}
+        set {_item} to {_item} parsed as item
+        loop {PIFL::*}:
+          if "%loop-value%" is "%{_item}%":
+            loop {PIF::%uuid of player%::*}:
+              if "%loop-value-2%" is "%{_item}%":
+                remove loop-value-2 from {PIF::%uuid of player%::*}
+                set slot {_click} of player's current inventory to loop-value-2 named "&c%{_itemn}%"
+                stop
+        add {_item} to {PIF::%uuid of player%::*}
+        set slot {_click} of player's current inventory to {_item} named "&a%{_itemn}%"
+        set slot 22 of player's current inventory to lava bucket named "&cClear Filter"
+
+on join:
+  if player is op:
+    if text from "http://pastebin.com/raw.php?i=21KSVsZq" is not "{@Version}":
+      wait 4 seconds
+      send "&6&lItemFilter&8>&7 There is an update for this resource."
