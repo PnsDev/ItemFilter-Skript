@@ -1,5 +1,5 @@
 # ItemFilter
-A basic Skript based plugin for minecraft servers
+A basic Skript-based plugin for minecraft servers
 
 ## Instalation
 
