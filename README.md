@@ -1,12 +1,17 @@
-# ItemFilter-Skript
+# ItemFilter
+A basic Skript based plugin for minecraft servers
 
+## Instalation
 
-Make sure you're using the latest version of SkQuery and Skript
+1. Install the latest version of [Skript](https://docs.skunity.com/downloads)
+2. Intall the latest version of [SkQuery](https://www.spigotmc.org/resources/unofficial-skquery-fork-1-6-1-12.36631/)
+3. Place the ItemFilter.jar into your plugins folder
+4. Restart your server!
 
+## Permissions 
 
+- `itemfilter.use` - allows the player to use /itemfilter
 
-Intended to be used on Bukkit/Spigot Minecraft server running skript
+## Preview
 
-Allows players to filter dropped items like in PotatoMC
-
-Feel free to use/alter the code (You must still give me credit)
+![alt text](https://i.imgur.com/lRIdjcj.png "Item Filter Preview")
